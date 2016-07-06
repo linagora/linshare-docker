@@ -1,0 +1,111 @@
+# Docker compose file for a full-featured Linshare architecture
+version: '2'
+
+services:
+
+    postgres:
+        container_name: linshare_postgres
+        image: linagora/linshare-database
+        networks:
+            - linshare-backend-tier
+        volumes:
+            - ./data/postgres_data/lib:/var/lib/postgresql/data
+        environment:
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=linshare
+            - POSTGRES_PASSWORD=PWD_linshare
+
+    backend:
+        container_name: linshare_backend
+        image: linagora/linshare-backend
+        links:
+            - postgres:linshare_postgres
+        networks:
+            - linshare-web-tier
+            - linshare-tomcat-tier
+            - linshare-service-tier
+            - linshare-backend-tier
+        volumes:
+            - ./data/linshare_data/lib:/var/lib/linshare
+        environment:
+            # Default variables can be overriden if needed.
+            - SMTP_HOST=linshare_smtp
+            #- SMTP_PORT=25
+            #- SMTP_USER=<undefined>
+            #- SMTP_PASS=<undefined>
+            - CLAMAV_HOST=linshare_clamav
+            #- CLAMAV_PORT=3310
+            - POSTGRES_HOST=linshare_postgres
+            #- POSTGRES_PORT=5432
+            # These variables are mandatory
+            - POSTGRES_USER=linshare
+            - POSTGRES_PASS=PWD_linshare
+
+    frontend:
+        container_name: linshare_frontend
+        image: httpd:2.4
+        ports:
+            - 80:80
+            - 443:443
+        networks:
+            - linshare-web-tier
+        volumes:
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+            - ./conf/frontend.conf:/usr/local/apache2/conf/httpd.conf
+
+    ui-admin:
+        container_name: linshare_ui-admin
+        image: linagora/linshare-ui-admin
+        networks:
+            - linshare-web-tier
+            - linshare-tomcat-tier
+        volumes:
+            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+        environment:
+            - EXTERNAL_URL=admin.linshare.local
+            - TOMCAT_URL=linshare_backend
+            - TOMCAT_PORT=8080
+
+    ui-upload-request:
+        container_name: linshare_ui-upload-request
+        image: linagora/linshare-ui-upload-request
+        networks:
+            - linshare-web-tier
+            - linshare-tomcat-tier
+        volumes:
+            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+        environment:
+            - EXTERNAL_URL=request.linshare.local
+            - TOMCAT_URL=linshare_backend
+            - TOMCAT_PORT=8080
+
+    smtp:
+        container_name: linshare_opensmtp
+        image: linagora/opensmtpd
+        networks:
+            - linshare-service-tier
+        volumes:
+            - ./conf/opensmptd.conf:/etc/smptd/smtpd.conf
+            - ./data/smtp_data/spool:/var/spool/mail
+
+    clamav:
+        container_name: linshare_clamav
+        image: mkodockx/docker-clamav
+        networks:
+            - linshare-backend-tier
+
+networks:
+    linshare-tomcat-tier:
+        driver: bridge
+    linshare-web-tier:
+        driver: bridge
+    linshare-service-tier:
+        driver: bridge
+    linshare-backend-tier:
+        driver: bridge
+
