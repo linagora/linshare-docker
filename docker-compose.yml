@@ -27,6 +27,7 @@ services:
             - linshare-backend-tier
         volumes:
             - ./data/linshare_data/lib:/var/lib/linshare
+              #- ./conf/log4j.properties:/etc/linshare/log4j.properties
         environment:
             # These variables are mandatory
             - SMTP_HOST=linshare_smtp
