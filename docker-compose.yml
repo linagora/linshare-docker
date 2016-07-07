@@ -90,7 +90,7 @@ services:
         networks:
             - linshare-service-tier
         volumes:
-            - ./conf/opensmptd.conf:/etc/smptd/smtpd.conf
+            - ./conf/smtpd.conf:/etc/smptd/smtpd.conf
             - ./data/smtp_data/spool:/var/spool/mail
 
     clamav:
