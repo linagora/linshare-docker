@@ -86,7 +86,7 @@ services:
             - TOMCAT_PORT=8080
 
     smtp:
-        container_name: linshare_opensmtp
+        container_name: linshare_smtp
         image: linagora/opensmtpd
         networks:
             - linshare-service-tier
