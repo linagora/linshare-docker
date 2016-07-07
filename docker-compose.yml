@@ -28,18 +28,18 @@ services:
         volumes:
             - ./data/linshare_data/lib:/var/lib/linshare
         environment:
+            # These variables are mandatory
+            - SMTP_HOST=linshare_smtp
+            - CLAMAV_HOST=linshare_clamav
+            - POSTGRES_HOST=linshare_postgres
+            - POSTGRES_USER=linshare
+            - POSTGRES_PASS=PWD_linshare
             # Default variables can be overriden if needed.
             #- SMTP_PORT=25
             #- SMTP_USER=<undefined>
             #- SMTP_PASS=<undefined>
             #- CLAMAV_PORT=3310
             #- POSTGRES_PORT=5432
-            - SMTP_HOST=linshare_smtp
-            - CLAMAV_HOST=linshare_clamav
-            - POSTGRES_HOST=linshare_postgres
-            # These variables are mandatory
-            - POSTGRES_USER=linshare
-            - POSTGRES_PASS=PWD_linshare
 
     frontend:
         container_name: linshare_frontend
