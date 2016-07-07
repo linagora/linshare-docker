@@ -52,6 +52,7 @@ services:
         volumes:
             - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
             - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.pem
             - ./conf/frontend.conf:/usr/local/apache2/conf/httpd.conf
 
     ui-admin:
