@@ -13,7 +13,7 @@ $ curl -sSL https://get.docker.com | sudo curl
 
 ```bash
 # As a binary
-$ curl -sL https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null
+$ curl -sL https://github.com/docker/compose/releases/download/1.7.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null
 $ sudo chmod +x /usr/local/bin/docker-compose
 
 # As a python package
