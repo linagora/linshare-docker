@@ -14,7 +14,7 @@ It consists of several containers :
 * Postgresql for the server
 * Apache2 with Linshare Admin's interface
 * Apache2 with Linshare UploadRequest's interface
-* Apache2 acting as a reverse-proxy for the above (expect Postgresql)
+* Apache2 acting as a reverse-proxy for the above (except Postgresql)
 * Opensmtp server configured in relay mode
 * ClamAV server to be used by Tomcat
 
@@ -28,7 +28,7 @@ Most of the containers can be configured to suits your needs, the available sett
 $ docker-compose up -d
 
 # use this line to launch it in interactive
-$ docker compose up
+$ docker-compose up
 ```
 
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
