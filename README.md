@@ -3,6 +3,23 @@
 > Docker is available [here](https://www.docker.com/products/docker) and docker-compose [here](https://docs.docker.com/compose).
 > Make sure that these are installed on your system before starting.
 
+* Docker can be installed with the following lines on most distros :
+
+```bash
+$ curl -sSL https://get.docker.com | sudo curl
+```
+
+* docker-compose can be installed as :
+
+```bash
+# As a binary
+$ curl -sL https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null
+$ sudo chmod +x /usr/local/bin/docker-compose
+
+# As a python package
+$ pip install -r requirements.txt
+```
+
 ### Presentation
 
     Deploy a Linshare instance with ease using Docker and docker-compose
