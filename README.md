@@ -55,6 +55,23 @@ By default the containers are listenning to **linshare.local** so you may have t
 127.0.0.1   linshare.local admin.linshare.local request.linshare.local
 ```
 
+And all uses the ```https``` protocol via the port 443.
+
+### Quick start
+
+Once everything is running, you still have to establish a connection to your LDAP server.
+
+1. Browse to [admin.linshare.local](https://admin.linshare.local)
+2. Select Settings
+3. Go to the LDAP section and Add LDAP connection
+4. Fullfil the needed fields
+    - Add a domain pattern
+    - Add a domain with a user provider
+5. Create a search request to check if the settings are correct
+6. Browse to [linshare.local/linshare](https://linshare.local/linshare)
+7. Log in with a user available in the provided LDAP
+8. Enjoy Linshare
+
 ### License
 
 View [license information](http://www.linshare.org/licenses/LinShare-License_AfferoGPL-v3_en.pdf) for the software contained in this image.
