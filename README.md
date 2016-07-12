@@ -47,6 +47,12 @@ $ docker-compose up -d
 
 # use this line to launch it in interactive
 $ docker-compose up
+
+# use this line to stop while launch in background
+$ docker-compose stop
+
+# use this line to delete previously created containers
+$ docker-compose down
 ```
 
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
