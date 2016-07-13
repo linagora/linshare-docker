@@ -65,18 +65,28 @@ And all uses the ```https``` protocol via the port 443.
 
 ### Quick start
 
-Once everything is running, you still have to establish a connection to your LDAP server.
+Once everything is running, you can start configuring Linshare
 
-1. Browse to [admin.linshare.local](https://admin.linshare.local)
-2. Select Settings
-3. Go to the LDAP section and Add LDAP connection
-4. Fullfil the needed fields
-    - Add a domain pattern
-    - Add a domain with a user provider
-5. Create a search request to check if the settings are correct
-6. Browse to [linshare.local/linshare](https://linshare.local/linshare)
-7. Log in with a user available in the provided LDAP
-8. Enjoy Linshare
+1. Browse to [admin.linshare.local](https://admin.linshare.local) and log in using
+    - mail : **root@localhost.localdomain**
+    - password : **adminlinshare**
+2. Select **Domain** &rarr; **LDAP connections**
+    - Click on the '**+**' icon
+    - Fill the fields with your LDAP credentials
+    - Hit **Save**
+3. Select **Domain** &rarr; **Domain patterns**
+    - In **Model selector** chose **default-pattern-openldap**
+    - Fill the field **Name**
+    - Hit **Save**
+4. Select **Domain** &rarr; **Manage domains**
+    - Click on the '**+**' button after **LinShareRootDomain**
+    - Fill the fields **Identifier**, **Name** and **Description**
+    - Leave **Inter-domains communication rules** to ```DefaultDomainPolicy```
+    - Select the wanted settings for the remaining fields
+    - Click on **Add provider**
+    - Select the previous created elements in **step 2** and **step 3** for each fields and provide your **Base dn** in the last one
+    - Hit **Save**
+5. You can now go [linshare.local/linshare](https://linshare.local/linshare) and start using your LDAP users.
 
 ### License
 
