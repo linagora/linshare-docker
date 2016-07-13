@@ -31,12 +31,14 @@ services:
         environment:
             # These variables are mandatory
             - SMTP_HOST=linshare_smtp
+            - SMTP_PORT=25
             - CLAMAV_HOST=linshare_clamav
             - POSTGRES_HOST=linshare_postgres
+            - POSTGRES_PORT=5432
             - POSTGRES_USER=linshare
             - POSTGRES_PASS=PWD_linshare
+            - CLAMAV_PORT=3310
             # Default variables can be overriden if needed.
-            #- SMTP_PORT=25
             #- SMTP_USER=<undefined>
             #- SMTP_PASS=<undefined>
             #- CLAMAV_PORT=3310
