@@ -37,22 +37,25 @@ It consists of several containers :
 * ClamAV server to be used by Tomcat
 
 Most of the containers can be configured to suits your needs, the available settings are either already used (and you have just to replace them) or commented out.
-
+Automatic upgrades for data used by containers is not available.
 
 ### How to use it
 
 ```bash
-# use this line to launch it in background
+# use this line to launch it
 $ docker-compose up -d
 
-# use this line to launch it in interactive
-$ docker-compose up
+# use this line to see logs for all containers
+$ docker-compose logs
 
-# use this line to stop while launch in background
+# use this line to stop
 $ docker-compose stop
 
 # use this line to delete previously created containers
 $ docker-compose down
+
+# use this line to delete all data created by containers (reset all modifications)
+$ sudo rm -fr data
 ```
 
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
