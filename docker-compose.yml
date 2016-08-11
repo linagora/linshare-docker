@@ -5,7 +5,7 @@ services:
 
     postgres:
         container_name: linshare_postgres
-        image: linagora/linshare-database
+        image: linagora/linshare-database:1.12
         networks:
             - linshare-backend-tier
         volumes:
@@ -17,7 +17,7 @@ services:
 
     backend:
         container_name: linshare_backend
-        image: linagora/linshare-backend
+        image: linagora/linshare-backend:1.12
         links:
             - postgres:linshare_postgres
         networks:
@@ -60,7 +60,7 @@ services:
 
     ui-admin:
         container_name: linshare_ui-admin
-        image: linagora/linshare-ui-admin
+        image: linagora/linshare-ui-admin:2.6
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -75,7 +75,7 @@ services:
 
     ui-upload-request:
         container_name: linshare_ui-upload-request
-        image: linagora/linshare-ui-upload-request
+        image: linagora/linshare-ui-upload-request:1.1
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
