@@ -3,9 +3,9 @@ version: '2'
 
 services:
 
-    postgres:
-        container_name: linshare_postgres
-        image: linagora/linshare-database:1.12
+    database:
+        container_name: linshare_database
+        image: linagora/linshare-database:2.0.0-beta1
         networks:
             - linshare-backend-tier
         volumes:
@@ -17,9 +17,10 @@ services:
 
     backend:
         container_name: linshare_backend
-        image: linagora/linshare-backend:1.12
+        image: linagora/linshare-backend:2.0.0-beta1
         links:
-            - postgres:linshare_postgres
+            - database:linshare_database
+            - mongodb:linshare_mongodb
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -27,17 +28,20 @@ services:
             - linshare-backend-tier
         volumes:
             - ./data/linshare_data/lib:/var/lib/linshare
-              #- ./conf/log4j.properties:/etc/linshare/log4j.properties
+            - ./conf/catalina.properties:/usr/local/tomcat/conf/catalina.properties
+            - ./conf/log4j.properties:/etc/linshare/log4j.properties
         environment:
             # These variables are mandatory
             - SMTP_HOST=linshare_smtp
             - SMTP_PORT=25
             - CLAMAV_HOST=linshare_clamav
-            - POSTGRES_HOST=linshare_postgres
+            - POSTGRES_HOST=linshare_database
             - POSTGRES_PORT=5432
             - POSTGRES_USER=linshare
             - POSTGRES_PASS=PWD_linshare
             - CLAMAV_PORT=3310
+            - MONGODB_HOST=linshare_mongodb
+            - MONGODB_PORT=27017
             # Default variables can be overriden if needed.
             #- SMTP_USER=<undefined>
             #- SMTP_PASS=<undefined>
@@ -60,7 +64,7 @@ services:
 
     ui-admin:
         container_name: linshare_ui-admin
-        image: linagora/linshare-ui-admin:2.6
+        image: linagora/linshare-ui-admin:3.0.0-beta1
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -87,6 +91,30 @@ services:
             - EXTERNAL_URL=request.linshare.local
             - TOMCAT_URL=linshare_backend
             - TOMCAT_PORT=8080
+
+    ui-user:
+        container_name: linshare_ui-user
+        image: linagora/linshare-ui-user:2.0.0-beta1
+        volumes:
+            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+        networks:
+            - linshare-web-tier
+            - linshare-tomcat-tier
+        environment:
+            - EXTERNAL_URL=files.linshare.local
+            - TOMCAT_URL=linshare_backend
+            - TOMCAT_PORT=8080
+
+    mongodb:
+        container_name: linshare_mongodb
+        image: mongo:3.2
+        volumes:
+            - ./data/mongodb_data/db:/data/db
+        networks:
+            - linshare-backend-tier
+        command: mongod --smallfiles
 
     smtp:
         container_name: linshare_smtp

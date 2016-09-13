@@ -28,10 +28,11 @@ $ pip install -r requirements.txt
 This docker-compose aims to make possible to quickly run a Linshare appliance.
 It consists of several containers :
 
-* Tomcat with Linshare User's interface and server inside
+* Tomcat with Linshare server
 * Postgresql for the server
 * Apache2 with Linshare Admin's interface
 * Apache2 with Linshare UploadRequest's interface
+* Apache2 with Linshare User's interface
 * Apache2 acting as a reverse-proxy for the above (except Postgresql)
 * Opensmtp server configured in relay mode
 * ClamAV server to be used by Tomcat
@@ -61,7 +62,7 @@ $ sudo rm -fr data
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
 
 ```bash
-127.0.0.1   linshare.local admin.linshare.local request.linshare.local
+127.0.0.1   admin.linshare.local request.linshare.local files.linshare.local
 ```
 
 And all uses the ```https``` protocol via the port 443.
@@ -89,7 +90,7 @@ Once everything is running, you can start configuring Linshare
     - Click on **Add provider**
     - Select the previous created elements in **step 2** and **step 3** for each fields and provide your **Base dn** in the last one
     - Hit **Save**
-5. You can now go [linshare.local/linshare](https://linshare.local/linshare) and start using your LDAP users.
+5. You can now go [files.linshare.local](https://files.linshare.local/) and start using your LDAP users.
 
 ### License
 
@@ -113,4 +114,4 @@ Official Linshare documentation is available here : [Linshare Configuration Guid
 
 #### Issues
 
-If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/linagora/linshare-backend/issues).
+If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/linagora/linshare-docker/issues).
