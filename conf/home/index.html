@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>LinShare Docker</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <script >
+   var root ='://' + location.hostname;
+   function goToLoc(protocol, port){
+    url = protocol+root + port;
+    window.open(url, '_blank');
+   }
+  </script>
+  <body id="page-top" class="index">
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand page-scroll" href="index.html#page-top">
+          <img src="img/logos/linshare-logo-white.png" class="img-responsive img-centered" alt="">
+          </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            <li>
+              <a class="page-scroll active" href="index.html">Services</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="markdown.html">Set up</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="advanced.set.up.html">Troubleshoots</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <!-- Header -->
+    <header>
+      <span class="groups-logo-symbol-w bg-jumbotron-img"></span>
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-heading">Welcome to LinShare Docker</div>
+          <div class="intro-lead-in">This page is designed to provide you help, documentation and all URL access to every deployed services</div>
+          <a href="markdown.html" class="page-scroll btn btn-xl">Get started</a>
+        </div>
+      </div>
+    </header>
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio" class="bg-light-gray">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Services</h2>
+            <h3 class="section-subheading text-muted"><br/>
+                You need to configure LinShare to add a ldap connection and a
+                domain to use it with your users. See Admin interface.
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a target="_blank" href="https://files.linshare.local/" class="portfolio-link click-link" data-toggle="modal">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img src="img/portfolio/ex-l2.png" class="img-responsive" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>User interface</h4>
+              <p  data-container="body" data-toggle="popover" data-placement="bottom" 
+                data-content="You need to configure your domain and ldap
+                connection first." data-trigger="hover">
+                <a href="markdown.html">set up</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a target="_blank" href="https://admin.linshare.local/" class="portfolio-link click-link" data-toggle="modal">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img src="img/portfolio/ex-admin.png" class="img-responsive" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Admin interface</h4>
+              <p  data-container="body" data-toggle="popover" data-placement="bottom" 
+                data-content="@ : root@localhost.localdomain <br/> Pwd : adminlinshare" data-trigger="hover"
+                ><a href="markdown.html">set up</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a target="_blank" href="https://request.linshare.local/" class="portfolio-link click-link" data-toggle="modal">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img src="img/portfolio/ex-ur.png" class="img-responsive" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Upload request template</h4>
+              <p  data-container="body" data-toggle="popover" data-placement="bottom" 
+                data-content="You need to have a valid token to access to this
+                service." data-trigger="hover">
+                <a href="markdown.html">set up</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; Linshare Docker 2016</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <!-- Theme JavaScript -->
+    <script src="js/agency.min.js"></script>
+    <script >
+      $(function () {
+      $('[data-toggle="popover"]').popover({ html:true})
+      })
+    </script>
+  </body>
+</html>

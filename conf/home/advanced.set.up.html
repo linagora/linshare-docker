@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <title>Troubleshoots</title>
+  <xmp src="md/advanced.set.up.md" theme="united" style="display:none;"></xmp>
+  <script>
+    var elements = document.body.getElementsByTagName("*");
+    for(var i=0; i<elements.length; i++) {
+        var element = elements[i];
+        if(element.nodeName == "XMP") {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', element.getAttribute("src"), false);
+            xhr.send();
+            element.innerHTML = xhr.responseText;
+        }
+    }
+  </script>
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Fonts -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+   <!-- Theme CSS -->
+  <link href="css/agency.css" rel="stylesheet">
+  <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top affix">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand page-scroll" href="#page-top">
+        <img src="img/logos/linshare-logo-white.png" class="img-responsive img-centered" alt="">
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="hidden">
+            <a href="#page-top"></a>
+          </li>
+          <li>
+            <a class="page-scroll" href="index.html">Services</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="markdown.html">Set up</a>
+          </li>
+          <li>
+            <a class="page-scroll active" href="advanced.set.up.html">Troubleshoots</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="copyright">Copyright &copy; Linshare Docker 2016</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+ <script src="js/strapdown.js"></script>
+
+</html>
+</html>

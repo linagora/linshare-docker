@@ -61,6 +61,9 @@ services:
             - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
             - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.pem
             - ./conf/frontend.conf:/usr/local/apache2/conf/httpd.conf
+            - ./conf/home:/usr/local/apache2/htdocs/home
+            - ./README.md:/usr/local/apache2/htdocs/home/md/README.md
+
 
     ui-admin:
         container_name: linshare_ui-admin
