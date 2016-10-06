@@ -9,7 +9,7 @@ services:
         networks:
             - linshare-backend-tier
         volumes:
-            - ./data/postgres_data/lib:/var/lib/postgresql/data
+            - ./data_1-12/postgres_data/lib:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=linshare
@@ -26,7 +26,7 @@ services:
             - linshare-service-tier
             - linshare-backend-tier
         volumes:
-            - ./data/linshare_data/lib:/var/lib/linshare
+            - ./data_1-12/linshare_data/lib:/var/lib/linshare
               #- ./conf/log4j.properties:/etc/linshare/log4j.properties
         environment:
             # These variables are mandatory
@@ -95,7 +95,7 @@ services:
             - linshare-service-tier
         volumes:
             - ./conf/smtpd.conf:/etc/smptd/smtpd.conf
-            - ./data/smtp_data/spool:/var/spool/mail
+            - ./data_1-12/smtp_data/spool:/var/spool/mail
 
     clamav:
         container_name: linshare_clamav
