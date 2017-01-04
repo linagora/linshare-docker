@@ -125,7 +125,7 @@ services:
         networks:
             - linshare-service-tier
         volumes:
-            - ./conf/smtpd.conf:/etc/smptd/smtpd.conf
+            - ./conf/smtpd.conf:/etc/smtpd/smtpd.conf
             - ./data/smtp_data/spool:/var/spool/mail
 
     clamav:
