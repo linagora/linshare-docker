@@ -80,21 +80,6 @@ services:
             - TOMCAT_URL=linshare_backend
             - TOMCAT_PORT=8080
 
-    ui-upload-request:
-        container_name: linshare_ui-upload-request
-        image: linagora/linshare-ui-upload-request:1.1
-        networks:
-            - linshare-web-tier
-            - linshare-tomcat-tier
-        volumes:
-            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
-        environment:
-            - EXTERNAL_URL=request.linshare.local
-            - TOMCAT_URL=linshare_backend
-            - TOMCAT_PORT=8080
-
     ui-user:
         container_name: linshare_ui-user
         image: linagora/linshare-ui-user:2.0.0-beta3
