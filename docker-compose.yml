@@ -5,7 +5,7 @@ services:
 
     database:
         container_name: linshare_database
-        image: linagora/linshare-database:2.0.0-beta3
+        image: linagora/linshare-database:2.0.0
         networks:
             - linshare-backend-tier
         volumes:
@@ -17,7 +17,7 @@ services:
 
     backend:
         container_name: linshare_backend
-        image: linagora/linshare-backend:2.0.0-beta3
+        image: linagora/linshare-backend:2.0.0
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
@@ -67,7 +67,7 @@ services:
 
     ui-admin:
         container_name: linshare_ui-admin
-        image: linagora/linshare-ui-admin:3.0.0-beta3
+        image: linagora/linshare-ui-admin:3.0.0
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -82,7 +82,7 @@ services:
 
     ui-user:
         container_name: linshare_ui-user
-        image: linagora/linshare-ui-user:2.0.0-beta3
+        image: linagora/linshare-ui-user:2.0.0
         volumes:
             - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
             - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
