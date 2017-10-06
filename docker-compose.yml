@@ -72,9 +72,9 @@ services:
             - linshare-web-tier
             - linshare-tomcat-tier
         volumes:
-            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+            - ./ssl/ca.pem:/usr/local/apache2/conf/ssl/server-ca.crt
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/ssl/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/ssl/server.key
         environment:
             - EXTERNAL_URL=admin.linshare.local
             - TOMCAT_URL=linshare_backend
@@ -84,9 +84,9 @@ services:
         container_name: linshare_ui-user
         image: linagora/linshare-ui-user:2.0
         volumes:
-            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.crt
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
+            - ./ssl/ca.pem:/usr/local/apache2/conf/ssl/server-ca.crt
+            - ./ssl/linshare.pem:/usr/local/apache2/conf/ssl/server.crt
+            - ./ssl/linshare.key:/usr/local/apache2/conf/ssl/server.key
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
