@@ -50,7 +50,7 @@ services:
 
     frontend:
         container_name: linshare_frontend
-        image: httpd:2.4
+        build: ./frontend
         ports:
             - 80:80
             - 443:443
@@ -60,7 +60,6 @@ services:
             - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
             - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
             - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.pem
-            - ./conf/frontend.conf:/usr/local/apache2/conf/httpd.conf
             - ./conf/home:/usr/local/apache2/htdocs/home
             - ./README.md:/usr/local/apache2/htdocs/home/md/README.md
 
