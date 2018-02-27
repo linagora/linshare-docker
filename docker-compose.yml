@@ -21,6 +21,7 @@ services:
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
+            - thumbnail-server:linshare_thumbnail-server
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -42,12 +43,20 @@ services:
             - CLAMAV_PORT=3310
             - MONGODB_HOST=linshare_mongodb
             - MONGODB_PORT=27017
-            - THUMBNAIL_ENABLE=false
+            - THUMBNAIL_ENABLE=true
+            # - THUMBNAIL_HOST=thumbnail-server
+            # - THUMBNAIL_PORT=8080
             # Default variables can be overriden if needed.
             #- SMTP_USER=<undefined>
             #- SMTP_PASS=<undefined>
             #- CLAMAV_PORT=3310
             #- POSTGRES_PORT=5432
+
+    thumbnail-server:
+        container_name: linshare_thumbnail-server
+        image: linagora/linshare-thumbnail-server:2.0.1
+        networks:
+            - linshare-backend-tier
 
     frontend:
         container_name: linshare_frontend
