@@ -54,7 +54,7 @@ services:
 
     thumbnail-server:
         container_name: linshare_thumbnail-server
-        image: linagora/linshare-thumbnail-server:2.0.1
+        image: linagora/linshare-thumbnail-server:2.0
         networks:
             - linshare-backend-tier
 
