@@ -86,7 +86,7 @@ services:
             - ./ssl/linshare.key:/usr/local/apache2/conf/ssl/server.key
         environment:
             - EXTERNAL_URL=admin.linshare.local
-            - TOMCAT_URL=linshare_backend
+            - TOMCAT_URL=backend
             - TOMCAT_PORT=8080
 
     ui-user:
@@ -101,7 +101,7 @@ services:
             - linshare-tomcat-tier
         environment:
             - EXTERNAL_URL=files.linshare.local
-            - TOMCAT_URL=linshare_backend
+            - TOMCAT_URL=backend
             - TOMCAT_PORT=8080
 
     mongodb:
