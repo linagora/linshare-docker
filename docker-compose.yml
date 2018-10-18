@@ -13,7 +13,7 @@ services:
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=linshare
-            - POSTGRES_PASSWORD=PWD_linshare
+            - POSTGRES_PASSWORD=linshare
 
     backend:
         container_name: linshare_backend
@@ -39,7 +39,7 @@ services:
             - POSTGRES_HOST=linshare_database
             - POSTGRES_PORT=5432
             - POSTGRES_USER=linshare
-            - POSTGRES_PASS=PWD_linshare
+            - POSTGRES_PASS=linshare
             - CLAMAV_PORT=3310
             - MONGODB_HOST=linshare_mongodb
             - MONGODB_PORT=27017
