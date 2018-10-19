@@ -5,7 +5,7 @@ services:
 
     database:
         container_name: linshare_database
-        image: linagora/linshare-database:2.1
+        image: linagora/linshare-database:2.2
         networks:
             - linshare-backend-tier
         volumes:
@@ -13,11 +13,11 @@ services:
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=linshare
-            - POSTGRES_PASSWORD=PWD_linshare
+            - POSTGRES_PASSWORD=linshare
 
     backend:
         container_name: linshare_backend
-        image: linagora/linshare-backend:2.1
+        image: linagora/linshare-backend:2.2
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
@@ -39,7 +39,7 @@ services:
             - POSTGRES_HOST=linshare_database
             - POSTGRES_PORT=5432
             - POSTGRES_USER=linshare
-            - POSTGRES_PASS=PWD_linshare
+            - POSTGRES_PASS=linshare
             - CLAMAV_PORT=3310
             - MONGODB_HOST=linshare_mongodb
             - MONGODB_PORT=27017
@@ -76,7 +76,7 @@ services:
 
     ui-admin:
         container_name: linshare_ui-admin
-        image: linagora/linshare-ui-admin:3.1
+        image: linagora/linshare-ui-admin:3.2
         networks:
             - linshare-web-tier
             - linshare-tomcat-tier
@@ -91,7 +91,7 @@ services:
 
     ui-user:
         container_name: linshare_ui-user
-        image: linagora/linshare-ui-user:2.1
+        image: linagora/linshare-ui-user:2.2
         volumes:
             - ./ssl/ca.pem:/usr/local/apache2/conf/ssl/server-ca.crt
             - ./ssl/linshare.pem:/usr/local/apache2/conf/ssl/server.crt
