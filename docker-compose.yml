@@ -5,7 +5,7 @@ services:
 
     database:
         container_name: linshare_database
-        image: linagora/linshare-database:2.2.0-1
+        image: linagora/linshare-database:2.2
         networks:
             - linshare-backend-tier
         volumes:
@@ -17,7 +17,7 @@ services:
 
     backend:
         container_name: linshare_backend
-        image: linagora/linshare-backend:2.2.0-1
+        image: linagora/linshare-backend:2.2
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
