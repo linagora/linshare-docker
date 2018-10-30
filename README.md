@@ -12,13 +12,8 @@ $ curl -sSL https://get.docker.com | sudo curl
 * docker-compose can be installed as :
 
 ```bash
-# As a binary
-$ cd path/to/linshare-docker
-$ curl -sL https://github.com/docker/compose/releases/download/1.7.0/docker-compose-`uname -s`-`uname -m` > ./docker-compose
-$ sudo chmod +x ./docker-compose
-
 # As a python package
-$ pip install -r requirements.txt
+$ pip install docker-compose
 ```
 
 ### Presentation
