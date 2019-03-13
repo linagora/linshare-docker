@@ -1,0 +1,26 @@
+debug = false
+
+# logLevel = "DEBUG"
+
+defaultEntryPoints = ["http","https"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+#   [entryPoints.http.redirect]
+#     entryPoint = "https"
+  [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+        CertFile = "/ssl/linshare.pem"
+        KeyFile = "/ssl/linshare.key"
+
+[api]
+
+[Docker]
+    endpoint = "tcp://docker-socket:2375"
+    domain = "linshare.local"
+    exposedByDefault = false
+    swarmMode = false
+    watch = true

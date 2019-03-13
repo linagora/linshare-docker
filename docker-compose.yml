@@ -1,13 +1,38 @@
+# vim: syntax=yaml textwidth=120 expandtab tabstop=2 softtabstop=2 shiftwidth=2 autoindent
+
 # Docker compose file for a full-featured Linshare architecture
-version: '2'
+version: '3.7'
 
 services:
 
+    reverse-proxy:
+        image: traefik:1.7.4-alpine
+        container_name: linshare_reverse-proxy
+        restart: always
+        ports:
+          - 80:80     # The HTTP port
+          - 443:443
+          - 8080:8080
+        labels:
+          - "traefik.enable=true"
+          - "traefik.frontend.rule=Host:traefik.linshare.local"
+          - "traefik.port=8080"
+        volumes:
+          - ./conf/traefik.toml:/etc/traefik/traefik.toml:ro
+          - ./ssl/:/ssl/
+
+    docker-socket:
+        container_name: linshare_docker-socket
+        image: tecnativa/docker-socket-proxy
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+          - CONTAINERS=1
+
     database:
         container_name: linshare_database
+        restart: on-failure
         image: linagora/linshare-database:2.2
-        networks:
-            - linshare-backend-tier
         volumes:
             - ./data/postgres_data/lib:/var/lib/postgresql/data
         environment:
@@ -17,20 +42,26 @@ services:
 
     backend:
         container_name: linshare_backend
+        restart: on-failure
         image: linagora/linshare-backend:2.2
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
             - thumbnail-server:linshare_thumbnail-server
-        networks:
-            - linshare-web-tier
-            - linshare-tomcat-tier
-            - linshare-service-tier
-            - linshare-backend-tier
+        depends_on:
+            - database
+            - mongodb
+            - thumbnail-server
         volumes:
             - ./data/linshare_data/lib:/var/lib/linshare
             - ./conf/catalina.properties:/usr/local/tomcat/conf/catalina.properties
             - ./conf/log4j.properties:/etc/linshare/log4j.properties
+        healthcheck:
+            test: ["CMD", "curl", "-s", "-f", "http://localhost:8080/linshare/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
         environment:
             # These variables are mandatory
             - SMTP_HOST=linshare_smtp
@@ -39,7 +70,7 @@ services:
             - POSTGRES_HOST=linshare_database
             - POSTGRES_PORT=5432
             - POSTGRES_USER=linshare
-            - POSTGRES_PASS=linshare
+            - POSTGRES_PASSWORD=linshare
             - CLAMAV_PORT=3310
             - MONGODB_HOST=linshare_mongodb
             - MONGODB_PORT=27017
@@ -48,93 +79,89 @@ services:
             # - THUMBNAIL_PORT=8080
             # Default variables can be overriden if needed.
             #- SMTP_USER=<undefined>
-            #- SMTP_PASS=<undefined>
+            #- SMTP_PASSWORD=<undefined>
             #- CLAMAV_PORT=3310
             #- POSTGRES_PORT=5432
 
     thumbnail-server:
         container_name: linshare_thumbnail-server
+        restart: on-failure
         image: linagora/linshare-thumbnail-server:2.0
-        networks:
-            - linshare-backend-tier
+        healthcheck:
+            test: ["CMD", "curl", "-s", "-f", "http://localhost:8081/healthcheck"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 10s
 
-    frontend:
-        container_name: linshare_frontend
-        build: ./frontend
-        ports:
-            - 80:80
-            - 443:443
-        networks:
-            - linshare-web-tier
+    home:
+        container_name: linshare_home
+        restart: on-failure
+        image: httpd:2.4
         volumes:
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/server.key
-            - ./ssl/ca.pem:/usr/local/apache2/conf/server-ca.pem
-            - ./conf/home:/usr/local/apache2/htdocs/home
-            - ./README.md:/usr/local/apache2/htdocs/home/md/README.md
+            - ./conf/home:/usr/local/apache2/htdocs/
+            - ./README.md:/usr/local/apache2/htdocs/md/README.md
+        labels:
+          - "traefik.enable=true"
+          - "traefik.frontend.rule=Host:linshare.local"
 
+    ui-user:
+        container_name: linshare_ui-user
+        restart: on-failure
+        image: linagora/linshare-ui-user:2.2
+        healthcheck:
+            test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+        depends_on:
+            - backend
+        labels:
+          - "traefik.enable=true"
+          - "traefik.frontend.rule=Host:user.linshare.local"
+        environment:
+            - EXTERNAL_URL=user.linshare.local
+            - TOMCAT_URL=backend
+            - TOMCAT_PORT=8080
 
     ui-admin:
         container_name: linshare_ui-admin
+        restart: on-failure
         image: linagora/linshare-ui-admin:3.2
-        networks:
-            - linshare-web-tier
-            - linshare-tomcat-tier
-        volumes:
-            - ./ssl/ca.pem:/usr/local/apache2/conf/ssl/server-ca.crt
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/ssl/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/ssl/server.key
+        healthcheck:
+            test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+        depends_on:
+            - backend
+        labels:
+          - "traefik.enable=true"
+          - "traefik.frontend.rule=Host:admin.linshare.local"
         environment:
             - EXTERNAL_URL=admin.linshare.local
             - TOMCAT_URL=backend
             - TOMCAT_PORT=8080
 
-    ui-user:
-        container_name: linshare_ui-user
-        image: linagora/linshare-ui-user:2.2
-        volumes:
-            - ./ssl/ca.pem:/usr/local/apache2/conf/ssl/server-ca.crt
-            - ./ssl/linshare.pem:/usr/local/apache2/conf/ssl/server.crt
-            - ./ssl/linshare.key:/usr/local/apache2/conf/ssl/server.key
-        networks:
-            - linshare-web-tier
-            - linshare-tomcat-tier
-        environment:
-            - EXTERNAL_URL=files.linshare.local
-            - TOMCAT_URL=backend
-            - TOMCAT_PORT=8080
-
-    mongodb:
-        container_name: linshare_mongodb
-        image: mongo:3.2
-        volumes:
-            - ./data/mongodb_data/db:/data/db
-        networks:
-            - linshare-backend-tier
-        command: mongod --smallfiles
-
     smtp:
         container_name: linshare_smtp
+        restart: on-failure
         image: linagora/opensmtpd
-        networks:
-            - linshare-service-tier
         volumes:
             - ./conf/smtpd.conf:/etc/smtpd/smtpd.conf
             - ./data/smtp_data/spool:/var/spool/mail
 
     clamav:
         container_name: linshare_clamav
+        restart: on-failure
         image: mkodockx/docker-clamav
-        networks:
-            - linshare-backend-tier
 
-networks:
-    linshare-tomcat-tier:
-        driver: bridge
-    linshare-web-tier:
-        driver: bridge
-    linshare-service-tier:
-        driver: bridge
-    linshare-backend-tier:
-        driver: bridge
-
+    mongodb:
+        container_name: linshare_mongodb
+        restart: on-failure
+        image: mongo:3.2
+        volumes:
+            - ./data/mongodb_data/db:/data/db
+        command: mongod --smallfiles
