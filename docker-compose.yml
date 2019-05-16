@@ -12,7 +12,7 @@ services:
         ports:
           - 80:80     # The HTTP port
           - 443:443
-          - 8080:8080
+          # - 8080:8080
         labels:
           - "traefik.enable=true"
           - "traefik.frontend.rule=Host:traefik.linshare.local"
