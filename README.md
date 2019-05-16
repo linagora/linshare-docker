@@ -31,6 +31,9 @@ It consists of several containers :
 * Apache2 acting as a reverse-proxy for the above (except Postgresql)
 * Opensmtp server configured in relay mode
 * ClamAV server to be used by Tomcat
+* LDAP directory containing some sample users. [see](https://github.com/linagora/linshare-ldap-for-tests-dockerfile)
+* An init container: it will create a domain with a connexion to the embedded
+  LDAP.
 
 Most of the containers can be configured to suits your needs, the available settings are either already used (and you have just to replace them) or commented out.
 Automatic upgrades for data used by containers is not available.
@@ -64,8 +67,10 @@ And all uses the ```https``` protocol via the port 443.
 
 ### Quick start
 
-Once everything is running, you can start using LinShare [home page](https://linshare.local) and configuring it:
+Once everything is running, you can start using LinShare [home page](https://linshare.local).
 
+If you do not want to use the init container, you can setup the link with the
+LDAP manually with the following guide:
 1. Browse to [admin.linshare.local](https://admin.linshare.local) and log in using
     - mail : **root@localhost.localdomain**
     - password : **adminlinshare**
@@ -74,7 +79,7 @@ Once everything is running, you can start using LinShare [home page](https://lin
     - Fill the fields with your LDAP credentials
     - Hit **Save**
 3. Select **Domain** &rarr; **Domain patterns**
-    - In **Model selector** chose **default-pattern-openldap**
+    - In **Model selector** chose **default-pattern-demo**
     - Fill the field **Name**
     - Hit **Save**
 4. Select **Domain** &rarr; **Manage domains**
@@ -86,6 +91,10 @@ Once everything is running, you can start using LinShare [home page](https://lin
     - Select the previous created elements in **step 2** and **step 3** for each fields and provide your **Base dn** in the last one
     - Hit **Save**
 5. You can now go [user.linshare.local](https://user.linshare.local/) and start using your LDAP users.
+    - user1@linshare.org : password1
+    - user2@linshare.org : password2
+    - ... to user7
+
 
 ### License
 

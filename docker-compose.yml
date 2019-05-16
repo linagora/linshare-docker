@@ -12,7 +12,7 @@ services:
         ports:
           - 80:80     # The HTTP port
           - 443:443
-          - 8080:8080
+          # - 8080:8080
         labels:
           - "traefik.enable=true"
           - "traefik.frontend.rule=Host:traefik.linshare.local"
@@ -165,3 +165,21 @@ services:
         volumes:
             - ./data/mongodb_data/db:/data/db
         command: mongod --smallfiles
+
+    ldap:
+        image: linagora/linshare-ldap-for-tests:1.0
+        container_name: linshare_ldap
+        ports:
+          - "20389:389"
+    init:
+        image: linagora/linshare-init:2.2
+        container_name: linshare_init
+        environment:
+          - LS_SERVER_HOST=backend
+          - LS_SERVER_PORT=8080
+          - LS_LDAP_NAME=ldap
+          - LS_LDAP_BASE_DN=ou=People,dc=linshare,dc=org
+          - LS_LDAP_DN=cn=linshare,dc=linshare,dc=org
+          - LS_LDAP_PW=linshare
+          - LS_DOMAIN_PATTERN_NAME=pattern-demo
+          - LS_DOMAIN_PATTERN_MODEL=a4620dfc-dc46-11e8-a098-2355f9d6585a
