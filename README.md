@@ -44,6 +44,11 @@ Automatic upgrades for data used by containers is not available.
 # use this line to launch it
 $ docker-compose up -d
 
+# Once containers are created and running in backgroup, you must check if they are running properly:
+$ docker-compose ps
+# If a container exits with an error code different than 0, it means it failed.
+# In this case, you should take a look to the container.
+
 # use this line to see logs for all containers
 $ docker-compose logs
 
