@@ -9,12 +9,9 @@
 $ curl -sSL https://get.docker.com | sudo curl
 ```
 
-* docker-compose can be installed as :
+* docker-compose :
 
-```bash
-# As a python package
-$ pip install docker-compose
-```
+you can install it according to the offcial documentaion [here](https://docs.docker.com/compose/install/)
 
 ### Presentation
 
@@ -25,10 +22,11 @@ It consists of several containers :
 
 * Tomcat with Linshare server
 * Postgresql for the server
+* MongoDB for the server
 * Apache2 with Linshare Admin's interface
-* Apache2 with Linshare UploadRequest's interface
 * Apache2 with Linshare User's interface
-* Apache2 acting as a reverse-proxy for the above (except Postgresql)
+* Apache2 acting as a reverse-proxy for the above (except Postgresql & MongoDB)
+* Thumbnail server to generate preview for input files on Linshare 
 * Opensmtp server configured in relay mode
 * ClamAV server to be used by Tomcat
 * LDAP directory containing some sample users. [see](https://github.com/linagora/linshare-ldap-for-tests-dockerfile)
@@ -107,11 +105,8 @@ View [license information](http://www.linshare.org/licenses/LinShare-License_Aff
 
 ### Supported Docker versions
 
-This image is officially supported on Docker version 1.9.0.
-
-Support for older versions (down to 1.6) is provided on a best-effort basis.
-
-Please see [the Docker installation documentation](https://docs.docker.com/installation/) for details on how to upgrade your Docker daemon.
+* required **docker** engine release : 18.06.0+ see [ documentation](https://docs.docker.com/installation/)  
+* required **composer** release : Compose 1.21.0+ see [documentation](https://github.com/docker/docker.github.io/blob/master/compose/compose-file/compose-versioning.md)
 
 
 ### User Feedback
