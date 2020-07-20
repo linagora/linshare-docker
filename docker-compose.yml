@@ -32,7 +32,7 @@ services:
     database:
         container_name: linshare_database
         restart: on-failure
-        image: linagora/linshare-database:2.3
+        image: linagora/linshare-database:4.0
         volumes:
             - ./data/postgres_data/lib:/var/lib/postgresql/data
         environment:
@@ -43,7 +43,7 @@ services:
     backend:
         container_name: linshare_backend
         restart: on-failure
-        image: linagora/linshare-backend:2.3
+        image: linagora/linshare-backend:4.0
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
@@ -72,8 +72,10 @@ services:
             - POSTGRES_USER=linshare
             - POSTGRES_PASSWORD=linshare
             - CLAMAV_PORT=3310
-            - MONGODB_HOST=linshare_mongodb
-            - MONGODB_PORT=27017
+            - MONGODB_DATA_REPLICA_SET=linshare_mongodb:27017
+            - MONGODB_SMALLFILES_REPLICA_SET=linshare_mongodb:27017
+            - MONGODB_USER=linshare
+            - MONGODB_PASSWORD=linshare
             - THUMBNAIL_ENABLE=true
             # - THUMBNAIL_HOST=thumbnail-server
             # - THUMBNAIL_PORT=8080
@@ -86,7 +88,7 @@ services:
     thumbnail-server:
         container_name: linshare_thumbnail-server
         restart: on-failure
-        image: linagora/linshare-thumbnail-server:2.0
+        image: linagora/linshare-thumbnail-server:2.1.1
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost:8081/healthcheck"]
             interval: 30s
@@ -108,7 +110,7 @@ services:
     ui-user:
         container_name: linshare_ui-user
         restart: on-failure
-        image: linagora/linshare-ui-user:2.3
+        image: linagora/linshare-ui-user:4.0
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -128,7 +130,7 @@ services:
     ui-admin:
         container_name: linshare_ui-admin
         restart: on-failure
-        image: linagora/linshare-ui-admin:3.3
+        image: linagora/linshare-ui-admin:4.0
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -161,10 +163,12 @@ services:
     mongodb:
         container_name: linshare_mongodb
         restart: on-failure
-        image: mongo:3.2
+        image: mongo:4.2       
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=linshare
+            - MONGO_INITDB_ROOT_PASSWORD=linshare
         volumes:
             - ./data/mongodb_data/db:/data/db
-        command: mongod --smallfiles
 
     ldap:
         image: linagora/linshare-ldap-for-tests:1.0
@@ -172,7 +176,7 @@ services:
         ports:
           - "20389:389"
     init:
-        image: linagora/linshare-init:2.3
+        image: linagora/linshare-init:4.0
         container_name: linshare_init
         environment:
           - LS_SERVER_HOST=backend
