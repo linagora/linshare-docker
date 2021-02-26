@@ -32,7 +32,7 @@ services:
     database:
         container_name: linshare_database
         restart: on-failure
-        image: linagora/linshare-database:4.0
+        image: linagora/linshare-database:4.1
         volumes:
             - ./data/postgres_data/lib:/var/lib/postgresql/data
         environment:
@@ -43,7 +43,7 @@ services:
     backend:
         container_name: linshare_backend
         restart: on-failure
-        image: linagora/linshare-backend:4.0
+        image: linagora/linshare-backend:4.1
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
@@ -110,7 +110,7 @@ services:
     ui-user:
         container_name: linshare_ui-user
         restart: on-failure
-        image: linagora/linshare-ui-user:4.0
+        image: linagora/linshare-ui-user:4.1
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -130,7 +130,7 @@ services:
     ui-admin:
         container_name: linshare_ui-admin
         restart: on-failure
-        image: linagora/linshare-ui-admin:4.0
+        image: linagora/linshare-ui-admin:4.1
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -176,7 +176,7 @@ services:
         ports:
           - "20389:389"
     init:
-        image: linagora/linshare-init:4.0
+        image: linagora/linshare-init:4.1
         container_name: linshare_init
         environment:
           - LS_SERVER_HOST=backend
