@@ -25,8 +25,9 @@ It consists of several containers :
 * MongoDB for the server
 * Apache2 with Linshare Admin's interface
 * Apache2 with Linshare User's interface
+* Apache2 with Linshare Upload request's interface
 * Apache2 acting as a reverse-proxy for the above (except Postgresql & MongoDB)
-* Thumbnail server to generate preview for input files on Linshare 
+* Thumbnail server to generate preview for input files on Linshare
 * Opensmtp server configured in relay mode
 * ClamAV server to be used by Tomcat
 * LDAP directory containing some sample users. [see](https://github.com/linagora/linshare-ldap-for-tests-dockerfile)
@@ -63,7 +64,7 @@ $ sudo rm -fr data
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
 
 ```bash
-127.0.0.1   admin.linshare.local user.linshare.local linshare.local traefik.linshare.local
+127.0.0.1   admin.linshare.local user.linshare.local linshare.local traefik.linshare.local upload-request.linshare.local
 ```
 
 And all uses the ```https``` protocol via the port 443.

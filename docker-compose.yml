@@ -147,6 +147,17 @@ services:
             - TOMCAT_URL=backend
             - TOMCAT_PORT=8080
 
+    ui-upload-request:
+      container_name: linshare_ui-upload-request
+      image: linagora/linshare-ui-upload-request:4.1
+      environment:
+        - EXTERNAL_URL=upload-request.linshare.local
+        - TOMCAT_URL=backend
+        - TOMCAT_PORT=8080
+      labels:
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:upload-request.linshare.local"
+
     smtp:
         container_name: linshare_smtp
         restart: on-failure
