@@ -64,7 +64,7 @@ services:
             start_period: 40s
         environment:
             # These variables are mandatory
-            - SMTP_HOST=linshare_smtp
+            - SMTP_HOST=linshare_mail
             - SMTP_PORT=25
             - CLAMAV_HOST=linshare_clamav
             - POSTGRES_HOST=linshare_database
@@ -158,13 +158,44 @@ services:
         - "traefik.enable=true"
         - "traefik.frontend.rule=Host:upload-request.linshare.local"
 
-    smtp:
-        container_name: linshare_smtp
-        restart: on-failure
-        image: linagora/opensmtpd
-        volumes:
-            - ./conf/smtpd.conf:/etc/smtpd/smtpd.conf
-            - ./data/smtp_data/spool:/var/spool/mail
+    mail:
+      container_name: linshare_mail
+      image: tvial/docker-mailserver:2.1
+      hostname: mail
+      domainname: linshare.org
+      volumes:
+          - ./conf/mail_conf/main.cf:/etc/postfix/main.cf
+          - ./conf/mail_conf/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
+          - ./conf/mail_conf/10-auth.conf:/etc/dovecot/conf.d/10-auth.conf
+          - ./conf/mail_conf/dovecot-ldap.conf.ext:/etc/dovecot/dovecot-ldap.conf.ext
+      environment:
+          - ENABLE_SPAMASSASSIN=0
+          - SPAMASSASSIN_SPAM_TO_INBOX=0
+          - ENABLE_POSTGREY=0
+          - DMS_DEBUG=1
+          - ENABLE_CLAMAV=0
+          - ENABLE_FAIL2BAN=0
+          - ONE_DIR=1
+          - DMS_DEBUG=0
+          - ENABLE_LDAP=1
+          - LDAP_SERVER_HOST=ldap
+          - LDAP_SEARCH_BASE=ou=People,dc=linshare,dc=org
+          - LDAP_BIND_DN=cn=linshare,dc=linshare,dc=org
+          - LDAP_BIND_PW=linshare
+      
+    webmail:
+      container_name: linshare_webmail
+      image: robbertkl/roundcube
+      volumes:
+          - ./conf/webmail_conf/config.inc.php:/var/www/config/config.inc.php
+      environment:
+          - ROUNDCUBE_DEFAULT_HOST=linshare_mail
+          - ROUNDCUBE_SMTP_SERVER=linshare_mail
+          - ROUNDCUBE_SMTP_PORT=25
+      labels:
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:webmail.linshare.local"
+        - "traefik.port=80"
 
     clamav:
         container_name: linshare_clamav
@@ -186,6 +217,7 @@ services:
         container_name: linshare_ldap
         ports:
           - "20389:389"
+
     init:
         image: linagora/linshare-init:4.1
         container_name: linshare_init

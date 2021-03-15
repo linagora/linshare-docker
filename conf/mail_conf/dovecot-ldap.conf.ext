@@ -1,0 +1,11 @@
+base = ou=People,dc=linshare,dc=org
+default_pass_scheme = SSHA
+dn = cn=linshare,dc=linshare,dc=org
+dnpass = linshare
+hosts = ldap
+ldap_version        = 3
+auth_bind = yes
+pass_attrs          = uid=user,userPassword=password
+pass_filter         = (&(objectClass=PostfixBookMailAccount)(uid=%n))
+user_attrs          = mailHomeDirectory=home,mailUidNumber=uid,mailGidNumber=gid,mailStorageDirectory=mail
+user_filter         = (&(objectClass=PostfixBookMailAccount)(uid=%n))
