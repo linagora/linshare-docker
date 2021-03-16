@@ -10,7 +10,6 @@ services:
         container_name: linshare_reverse-proxy
         restart: always
         ports:
-          - 80:80     # The HTTP port
           - 443:443
           # - 8080:8080
         labels:
