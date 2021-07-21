@@ -95,13 +95,39 @@ LDAP manually with the following guide:
     - Select the previous created elements in **step 2** and **step 3** for each fields and provide your **Base dn** in the last one
     - Hit **Save**
 5. You can now go [user.linshare.local](https://user.linshare.local/) and start using your LDAP users.
-    - user1@linshare.org : password1
-    - user2@linshare.org : password2
-    - ... to user7
+
+| firstName | lastName    | mail                            |
+|-----------|-------------|---------------------------------|
+| Abbey     | CURRY       | abbey.curry@linshare.org        |
+| Amy       | WOLSH       | amy.wolsh@linshare.org          |
+| Anderson  | WAXMAN      | anderson.waxman@linshare.org    |
+| Cornell   | ABLE        | cornell.able@linshare.org       |
+| Dawson    | WATERFIELD  | dawson.waterfield@linshare.org  |
+| Felton    | GUMPER      | felton.gumper@linshare.org      |
+| Grant     | BIG         | grant.big@linshare.org          |
+| Nick      | DERBIES     | nick.derbies@linshare.org       |
+| Peter     | WILSON      | peter.wilson@linshare.org       |
+| Walker    | MCCALLISTER | walker.mccallister@linshare.org |
+
+    - password : secret
+
+External users: They only have access to the webmail. They could be used as external contacts for anonymours URL, Upload request or LinShare guests
+
+| 	      mail                |       Password
+|---------------------------------| ---------------------|
+| guest1@linshare.org             |       password1      |
+| guest2@linshare.org             |       password2      |
+| guest3@linshare.org             |       password3      |
+| guest4@linshare.org             |       password4      |
+| guest5@linshare.org             |       password5      |
+| external1@linshare.org          |       password1      |
+| external2@linshare.org          |       password2      |
+| external3@linshare.org          |       password3      |
+| external4@linshare.org          |       password4      |
+| external5@linshare.org          |       password5      |
 
 
 ### License
-
 View [license information](http://www.linshare.org/licenses/LinShare-License_AfferoGPL-v3_en.pdf) for the software contained in this image.
 
 ### Supported Docker versions
