@@ -196,6 +196,14 @@ services:
         - "traefik.frontend.rule=Host:webmail.linshare.local"
         - "traefik.port=80"
 
+    documentation:
+        container_name: linshare_documentation
+        image: linagora/linshare-backend-documentation-webservice:4.2
+        labels:
+          - "traefik.enable=true"
+          - "traefik.frontend.rule=Host:docs.linshare.local"
+          - "traefik.port=8080"
+
     clamav:
         container_name: linshare_clamav
         restart: on-failure

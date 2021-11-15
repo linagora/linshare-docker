@@ -64,7 +64,7 @@ $ sudo rm -fr data
 By default the containers are listenning to **linshare.local** so you may have to add the following lines in your hosts file :
 
 ```bash
-127.0.0.1   admin.linshare.local user.linshare.local linshare.local traefik.linshare.local webmail.linshare.local upload-request.linshare.local
+127.0.0.1   admin.linshare.local user.linshare.local linshare.local traefik.linshare.local webmail.linshare.local upload-request.linshare.local docs.linshare.local
 ```
 
 And all uses the ```https``` protocol via the port 443.
