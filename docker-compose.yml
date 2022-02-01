@@ -198,7 +198,7 @@ services:
 
     documentation:
         container_name: linshare_documentation
-        image: linagora/linshare-backend-documentation-webservice:4.2
+        image: linagora/linshare-backend-documentation-webservice:5.0
         labels:
           - "traefik.enable=true"
           - "traefik.frontend.rule=Host:docs.linshare.local"
