@@ -6,18 +6,19 @@ version: '3.7'
 services:
 
     reverse-proxy:
-        image: traefik:1.7.4-alpine
+        image: traefik:v2.6
         container_name: linshare_reverse-proxy
-        restart: always
         ports:
+          - 80:80
           - 443:443
-          # - 8080:8080
+
         labels:
           - "traefik.enable=true"
-          - "traefik.frontend.rule=Host:traefik.linshare.local"
-          - "traefik.port=8080"
+          - "traefik.http.routers.traefik.rule=Host(`traefik.linshare.local`)"
+          - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+
         volumes:
-          - ./conf/traefik.toml:/etc/traefik/traefik.toml:ro
+          - ./conf/traefik:/etc/traefik
           - ./ssl/:/ssl/
 
     docker-socket:
@@ -104,7 +105,7 @@ services:
             - ./README.md:/usr/local/apache2/htdocs/md/README.md
         labels:
           - "traefik.enable=true"
-          - "traefik.frontend.rule=Host:linshare.local"
+          - "traefik.http.routers.home.rule=Host(`home.linshare.local`)"
 
     ui-user:
         container_name: linshare_ui-user
@@ -120,7 +121,7 @@ services:
             - backend
         labels:
           - "traefik.enable=true"
-          - "traefik.frontend.rule=Host:user.linshare.local"
+          - "traefik.http.routers.user.rule=Host(`user.linshare.local`)"
         environment:
             - EXTERNAL_URL=user.linshare.local
             - TOMCAT_URL=backend
@@ -140,7 +141,7 @@ services:
             - backend
         labels:
           - "traefik.enable=true"
-          - "traefik.frontend.rule=Host:admin.linshare.local"
+          - "traefik.http.routers.admin.rule=Host(`admin.linshare.local`)"
         environment:
             - EXTERNAL_URL=admin.linshare.local
             - TOMCAT_URL=backend
@@ -155,7 +156,7 @@ services:
         - TOMCAT_PORT=8080
       labels:
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:upload-request.linshare.local"
+        - "traefik.http.routers.uploadrequest.rule=Host(`upload-request.linshare.local`)"
 
     mail:
       container_name: linshare_mail
@@ -181,7 +182,7 @@ services:
           - LDAP_SEARCH_BASE=ou=People,dc=linshare,dc=org
           - LDAP_BIND_DN=cn=linshare,dc=linshare,dc=org
           - LDAP_BIND_PW=linshare
-      
+
     webmail:
       container_name: linshare_webmail
       image: robbertkl/roundcube
@@ -193,16 +194,15 @@ services:
           - ROUNDCUBE_SMTP_PORT=25
       labels:
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:webmail.linshare.local"
-        - "traefik.port=80"
+        - "traefik.http.routers.webmail.rule=Host(`webmail.linshare.local`)"
 
     documentation:
         container_name: linshare_documentation
         image: linagora/linshare-backend-documentation-webservice:5.0
         labels:
           - "traefik.enable=true"
-          - "traefik.frontend.rule=Host:docs.linshare.local"
-          - "traefik.port=8080"
+          - "traefik.http.routers.docs.rule=Host(`docs.linshare.local`)"
+          - "traefik.http.services.docs.loadbalancer.server.port=8080"
 
     clamav:
         container_name: linshare_clamav
@@ -212,7 +212,7 @@ services:
     mongodb:
         container_name: linshare_mongodb
         restart: on-failure
-        image: mongo:4.2       
+        image: mongo:4.2
         environment:
             - MONGO_INITDB_ROOT_USERNAME=linshare
             - MONGO_INITDB_ROOT_PASSWORD=linshare

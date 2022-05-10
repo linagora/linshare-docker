@@ -1,0 +1,27 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+    [entryPoints.websecure.http.tls]
+
+[providers]
+  providersThrottleDuration = "2s"
+  [providers.file]
+    watch = true
+    directory = "/etc/traefik"
+    filename = "dynamic.toml"
+    debugLogGeneratedTemplate = true
+  [providers.docker]
+    watch = true
+    endpoint = "tcp://docker-socket:2375"
+    swarmModeRefreshSeconds = "15s"
+    httpClientTimeout = "0s"
+
+[api]
+  insecure = true
+
+[log]
+  level = "DEBUG"
+
