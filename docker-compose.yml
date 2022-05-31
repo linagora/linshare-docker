@@ -160,28 +160,40 @@ services:
 
     mail:
       container_name: linshare_mail
-      image: tvial/docker-mailserver:2.1
+      image: docker.io/mailserver/docker-mailserver:latest
       hostname: mail
       domainname: linshare.org
       volumes:
-          - ./conf/mail_conf/main.cf:/etc/postfix/main.cf
-          - ./conf/mail_conf/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
-          - ./conf/mail_conf/10-auth.conf:/etc/dovecot/conf.d/10-auth.conf
-          - ./conf/mail_conf/dovecot-ldap.conf.ext:/etc/dovecot/dovecot-ldap.conf.ext
+      - /var/mail
+      - /var/mail-state
+      - /var/log/mail/
+      - /tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:ro
+      - ./conf/mail_conf/main.cf:/etc/postfix/main.cf
+
       environment:
-          - ENABLE_SPAMASSASSIN=0
-          - SPAMASSASSIN_SPAM_TO_INBOX=0
-          - ENABLE_POSTGREY=0
-          - DMS_DEBUG=1
-          - ENABLE_CLAMAV=0
-          - ENABLE_FAIL2BAN=0
-          - ONE_DIR=1
-          - DMS_DEBUG=0
-          - ENABLE_LDAP=1
-          - LDAP_SERVER_HOST=ldap:1389
-          - LDAP_SEARCH_BASE=ou=People,dc=linshare,dc=org
-          - LDAP_BIND_DN=cn=linshare,dc=linshare,dc=org
-          - LDAP_BIND_PW=linshare
+      - ENABLE_SPAMASSASSIN=0
+      - SPAMASSASSIN_SPAM_TO_INBOX=0
+      - ENABLE_POSTGREY=0
+      - DMS_DEBUG=1
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=0
+      - ONE_DIR=1
+      - DMS_DEBUG=0
+      - ENABLE_LDAP=1
+      - LDAP_SERVER_HOST=ldap://ldap:1389
+      - LDAP_SEARCH_BASE=ou=People,dc=linshare,dc=org
+      - LDAP_BIND_DN=cn=linshare,dc=linshare,dc=org
+      - LDAP_BIND_PW=linshare
+      - LDAP_QUERY_FILTER_DOMAIN=(&(|(mail=*@%s)(mailalias=*@%s)(mailGroupMember=*@%s))(mailEnabled=TRUE))
+      - LDAP_QUERY_FILTER_USER=(&(mail=%s)(mailEnabled=TRUE))
+      - LDAP_QUERY_FILTER_ALIAS=(&(mailAlias=%s)(mailEnabled=TRUE))
+      - LDAP_QUERY_FILTER_GROUP=(&(mailGroupMember=%s)(mailEnabled=TRUE))
+      - DOVECOT_AUTH_BIND=yes
+      - DOVECOT_USER_FILTER=(&(objectClass=PostfixBookMailAccount)(uid=%n))
+      - DOVECOT_USER_ATTRS=mailHomeDirectory=home,mailUidNumber=uid,mailGidNumber=gid,mailStorageDirectory=mail
+      - DOVECOT_PASS_FILTER=(&(objectClass=PostfixBookMailAccount)(uid=%n))
+      - DOVECOT_PASS_ATTRS=uid=user,userPassword=password
 
     webmail:
       container_name: linshare_webmail
