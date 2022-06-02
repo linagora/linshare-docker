@@ -9,7 +9,6 @@ services:
         image: traefik:v2.6
         container_name: linshare_reverse-proxy
         ports:
-          - 80:80
           - 443:443
 
         labels:
