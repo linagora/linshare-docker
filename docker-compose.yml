@@ -223,7 +223,7 @@ services:
     mongodb:
         container_name: linshare_mongodb
         restart: on-failure
-        image: mongo:4.2
+        image: mongo:5.0
         environment:
             - MONGO_INITDB_ROOT_USERNAME=linshare
             - MONGO_INITDB_ROOT_PASSWORD=linshare
