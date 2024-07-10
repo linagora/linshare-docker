@@ -31,7 +31,7 @@ services:
     database:
         container_name: linshare_database
         restart: on-failure
-        image: linagora/linshare-database:6.2.0
+        image: linagora/linshare-database:6.3.0
         volumes:
             - ./data/postgres_data/lib:/var/lib/postgresql/data
         environment:
@@ -42,7 +42,7 @@ services:
     backend:
         container_name: linshare_backend
         restart: on-failure
-        image: linagora/linshare-backend:6.2.0
+        image: linagora/linshare-backend:6.3.0
         links:
             - database:linshare_database
             - mongodb:linshare_mongodb
@@ -109,7 +109,7 @@ services:
     ui-user:
         container_name: linshare_ui-user
         restart: on-failure
-        image: linagora/linshare-ui-user:6.2.0
+        image: linagora/linshare-ui-user:6.3.0
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -129,7 +129,7 @@ services:
     ui-admin:
         container_name: linshare_ui-admin
         restart: on-failure
-        image: linagora/linshare-ui-admin:6.2.0
+        image: linagora/linshare-ui-admin:6.3.0
         healthcheck:
             test: ["CMD", "curl", "-s", "-f", "http://localhost/linshare/"]
             interval: 30s
@@ -148,7 +148,7 @@ services:
 
     ui-upload-request:
       container_name: linshare_ui-upload-request
-      image: linagora/linshare-ui-upload-request:6.2.0
+      image: linagora/linshare-ui-upload-request:6.3.0
       environment:
         - EXTERNAL_URL=upload-request.linshare.local
         - TOMCAT_URL=backend
@@ -209,7 +209,7 @@ services:
 
     documentation:
         container_name: linshare_documentation
-        image: linagora/linshare-backend-documentation-webservice:6.2.0
+        image: linagora/linshare-backend-documentation-webservice:6.3.0
         labels:
           - "traefik.enable=true"
           - "traefik.http.routers.docs.rule=Host(`docs.linshare.local`)"
@@ -237,7 +237,7 @@ services:
           - "1389:1389"
 
     init:
-        image: linagora/linshare-init:6.2.0
+        image: linagora/linshare-init:6.3.0
         container_name: linshare_init
         environment:
           - LS_SERVER_HOST=backend
