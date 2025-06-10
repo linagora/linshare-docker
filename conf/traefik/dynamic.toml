@@ -1,0 +1,3 @@
+[[tls.certificates]]
+  certFile = "/ssl/linshare.pem"
+  keyFile = "/ssl/linshare.key"
